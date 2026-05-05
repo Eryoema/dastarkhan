@@ -4,7 +4,7 @@ services:
     runtime: python
     plan: free
     buildCommand: bash build.sh
-    startCommand: gunicorn dastarkhan_backend.wsgi:application
+    startCommand: gunicorn dastarkhan_backend.wsgi:application --bind 0.0.0.0:$PORT
     envVars:
       - key: SECRET_KEY
         generateValue: true

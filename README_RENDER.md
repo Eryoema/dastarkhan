@@ -7,7 +7,7 @@ This project is ready for Render with Django, PostgreSQL, Django Admin, static f
 Use these settings when creating the Web Service manually:
 
 - Build Command: `bash build.sh`
-- Start Command: `gunicorn dastarkhan_backend.wsgi:application`
+- Start Command: `gunicorn dastarkhan_backend.wsgi:application --bind 0.0.0.0:$PORT`
 - Python version: `3.13.5`
 
 Add a PostgreSQL database in Render and connect it to the web service with `DATABASE_URL`.
