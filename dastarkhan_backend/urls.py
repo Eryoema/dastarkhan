@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
 from django.views.static import serve
 
 from restaurant import views
@@ -25,4 +25,5 @@ urlpatterns += [
     path("css/<path:path>", serve, {"document_root": settings.BASE_DIR / "css"}),
     path("js/<path:path>", serve, {"document_root": settings.BASE_DIR / "js"}),
     path("pdf/<path:path>", serve, {"document_root": settings.BASE_DIR / "pdf"}),
+    re_path(r"^(?!admin/|api/|css/|js/|pdf/).*$", views.index, name="index-fallback"),
 ]
