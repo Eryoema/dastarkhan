@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark light" />
+  <title>DASTARKHAN — Казахстан ресторан</title>
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("dastarkhan-theme");
+        var light = t === "light";
+        document.documentElement.setAttribute("data-theme", light ? "light" : "dark");
+        document.documentElement.style.colorScheme = light ? "light" : "dark";
+      } catch (e) {
+        document.documentElement.setAttribute("data-theme", "dark");
+        document.documentElement.style.colorScheme = "dark";
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="css/style.css?v=20260505-19" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <!-- Font Awesome icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+  <!-- =========================================================
+       NAVIGATION BAR
+  ========================================================= -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+
+      <!-- Logo -->
+      <a href="#home" class="logo" data-scroll="home">
+        <span class="logo-kz">DASTARKHAN</span>
+        <span class="logo-tagline" data-i18n="logoTagline">Дәстүрлі мейрамхана</span>
+      </a>
+
+      <!-- Hamburger (mobile) -->
+      <button class="burger" id="burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <!-- Nav links -->
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home"        data-scroll="home"        data-i18n="navHome">Басты бет</a></li>
+        <li><a href="#menu"        data-scroll="menu"        data-i18n="navMenu">Мәзір</a></li>
+        <li><a href="#download"    data-scroll="download"    data-i18n="navDownload">Мәзірді жүктеу</a></li>
+        <li><a href="#" data-open-modal="reservation" data-i18n="navReserve">Үстел брондау</a></li>
+        <li><a href="#about"       data-scroll="about"       data-i18n="navAbout">Біз туралы</a></li>
+      </ul>
+
+      <!-- Lang switcher + Auth buttons -->
+      <div class="nav-right">
+        <button type="button" class="theme-btn" id="themeToggle" aria-pressed="false" aria-label="Тақырыпты ауыстыру">
+          <i class="fa-solid fa-moon theme-icon-moon" aria-hidden="true"></i>
+          <i class="fa-solid fa-sun theme-icon-sun" aria-hidden="true"></i>
+        </button>
+        <button type="button" class="icon-nav-btn quiz-nav-btn" id="navQuizBtn" data-open-modal="quiz" data-i18n-title="quizNavTitle" title="Ойын">
+          <i class="fa-solid fa-dice" aria-hidden="true"></i>
+        </button>
+        <div class="lang-switcher" id="langSwitcher">
+          <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="true" aria-expanded="false" aria-label="Language">
+            <span class="lang-globe" aria-hidden="true"><i class="fa-solid fa-globe"></i></span>
+            <span class="lang-current-code" data-lang-current>ҚЗ</span>
+            <i class="fa-solid fa-chevron-down lang-chevron" aria-hidden="true"></i>
+          </button>
+          <div class="lang-options" role="menu" aria-label="Language">
+            <button type="button" class="lang-btn active" data-lang="kz" role="menuitem">
+              <span class="lang-option-code">ҚЗ</span>
+              <span>Қазақша</span>
+            </button>
+            <button type="button" class="lang-btn" data-lang="ru" role="menuitem">
+              <span class="lang-option-code">РУ</span>
+              <span>Русский</span>
+            </button>
+            <button type="button" class="lang-btn" data-lang="en" role="menuitem">
+              <span class="lang-option-code">EN</span>
+              <span>English</span>
+            </button>
+          </div>
+        </div>
+        <button type="button" class="icon-nav-btn cart-btn" id="navCartBtn" data-open-modal="cart" data-i18n-title="navCart" title="Себет">
+          <i class="fa-solid fa-basket-shopping" aria-hidden="true"></i>
+          <span class="cart-badge hidden" id="cartBadge" aria-hidden="true">0</span>
+        </button>
+        <span class="nav-auth-guest" id="navGuestWrap">
+          <button type="button" class="btn btn-outline" data-open-modal="register" data-i18n="navRegister">Тіркелу</button>
+          <button type="button" class="btn btn-primary" data-open-modal="login" data-i18n="navLogin">Кіру</button>
+        </span>
+        <span class="nav-auth-user hidden" id="navUserWrap">
+          <button type="button" class="icon-nav-btn" id="navProfileBtn" data-open-modal="profile" data-i18n-title="navProfile" title="Профиль">
+            <i class="fa-solid fa-user" aria-hidden="true"></i>
+          </button>
+        </span>
+      </div>
+
+    </div>
+  </nav>
+
+  <!-- =========================================================
+       HERO SECTION
+  ========================================================= -->
+  <section class="hero" id="home">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow" data-i18n="heroEyebrow">Алматы, Қазақстан</p>
+      <h1 class="hero-title">DASTARKHAN</h1>
+      <p class="hero-sub" data-i18n="heroSub">Дәстүр мен заманауи асханалық өнердің қиылысы</p>
+      <div class="hero-actions">
+        <a href="#menu" class="btn btn-gold" data-i18n="heroBtn">Мәзірді көру</a>
+        <a href="#" class="btn btn-ghost" data-open-modal="reservation" data-i18n="heroReserveBtn">Үстел брондау</a>
+      </div>
+    </div>
+    <div class="hero-scroll-hint">
+      <span></span>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       FEATURED DISHES (Popular)
+  ========================================================= -->
+  <section class="featured" id="featured">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow" data-i18n="featuredEyebrow">Таңдаулы</p>
+        <h2 class="section-title" data-i18n="featuredTitle">Танымал тағамдар</h2>
+      </div>
+      <div class="featured-grid" id="featuredGrid">
+        <!-- JS will populate -->
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SPECIALS / OFFERS
+  ========================================================= -->
+  <section class="specials" id="specials">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow" data-i18n="specialsEyebrow">Ұсыныстар</p>
+        <h2 class="section-title" data-i18n="specialsTitle">Арнайы акциялар</h2>
+      </div>
+      <div class="specials-grid">
+        <div class="special-card">
+          <div class="special-badge" data-i18n="specialBadge1">-20%</div>
+          <div class="special-body">
+            <h3 data-i18n="special1Title">Кешкі мәзір</h3>
+            <p data-i18n="special1Desc">18:00–21:00 аралығында барлық тағамдарға 20% жеңілдік</p>
+          </div>
+        </div>
+        <div class="special-card special-card--mid">
+          <div class="special-badge" data-i18n="specialBadge2">2+1</div>
+          <div class="special-body">
+            <h3 data-i18n="special2Title">Достарыңмен кел</h3>
+            <p data-i18n="special2Desc">3 адам келсе, ең арзан тағам тегін</p>
+          </div>
+        </div>
+        <div class="special-card">
+          <div class="special-badge" data-i18n="specialBadge3">VIP</div>
+          <div class="special-body">
+            <h3 data-i18n="special3Title">Бизнес ланч</h3>
+            <p data-i18n="special3Desc">Дүйсенбі–Жұма, 12:00–15:00 арасында 3 тағам</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       MENU SECTION
+  ========================================================= -->
+  <section class="menu-section" id="menu">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow" data-i18n="menuEyebrow">Тағамдар</p>
+        <h2 class="section-title" data-i18n="menuTitle">Біздің мәзір</h2>
+      </div>
+
+      <!-- Category tabs -->
+      <div class="menu-tabs" id="menuTabs">
+        <div class="menu-inline-search">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <input
+            type="text"
+            id="searchInput"
+            class="search-input"
+            data-i18n-placeholder="searchPlaceholder"
+            placeholder="Тағам атауын енгізіңіз..."
+            autocomplete="off"
+          />
+          <button class="mic-btn" id="micBtn" type="button" data-i18n-title="micStart">
+            <i class="fa-solid fa-microphone"></i>
+          </button>
+        </div>
+        <button class="tab-btn active" data-cat="all"      data-i18n="catAll">Барлығы</button>
+        <button class="tab-btn"        data-cat="pizza"    data-i18n="catPizza">Пицца</button>
+        <button class="tab-btn"        data-cat="pasta"    data-i18n="catPasta">Паста</button>
+        <button class="tab-btn"        data-cat="steak"    data-i18n="catSteak">Стейк</button>
+        <button class="tab-btn"        data-cat="salad"    data-i18n="catSalad">Салат</button>
+        <button class="tab-btn"        data-cat="dessert"  data-i18n="catDessert">Десерт</button>
+        <button class="tab-btn"        data-cat="drink"    data-i18n="catDrink">Сусын</button>
+      </div>
+      <p class="mic-status" id="micStatus"></p>
+      <div class="search-results" id="searchResults"></div>
+
+      <!-- Dishes grid -->
+      <div class="menu-grid" id="menuGrid">
+        <!-- JS will populate -->
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       DOWNLOAD MENU SECTION
+  ========================================================= -->
+  <section class="download-section" id="download">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow" data-i18n="downloadEyebrow">PDF</p>
+        <h2 class="section-title" data-i18n="downloadTitle">Мәзірді жүктеу</h2>
+        <p class="section-desc" data-i18n="downloadDesc">Толық мәзірді PDF форматында жүктеп алыңыз</p>
+      </div>
+      <div class="download-cards">
+        <a href="pdf/menukz.pdf" download="menukz.pdf" class="dl-card">
+          <i class="fa-solid fa-file-pdf"></i>
+          <span class="dl-lang">Қазақша</span>
+          <span class="dl-size" data-i18n="dlSize">PDF файл</span>
+        </a>
+        <a href="pdf/menuru.pdf" download="menuru.pdf" class="dl-card dl-card--mid">
+          <i class="fa-solid fa-file-pdf"></i>
+          <span class="dl-lang">Русский</span>
+          <span class="dl-size" data-i18n="dlSize">PDF файл</span>
+        </a>
+        <a href="pdf/menuen.pdf" download="menuen.pdf" class="dl-card">
+          <i class="fa-solid fa-file-pdf"></i>
+          <span class="dl-lang">English</span>
+          <span class="dl-size" data-i18n="dlSize">PDF файл</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       GALLERY
+  ========================================================= -->
+  <section class="gallery-section" id="gallery">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow" data-i18n="galleryEyebrow">Галерея</p>
+        <h2 class="section-title" data-i18n="galleryTitle">Мейрамхана атмосферасы</h2>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-item g-tall"  style="background-image:url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&auto=format&fit=crop')"></div>
+        <div class="gallery-item"         style="background-image:url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&auto=format&fit=crop')"></div>
+        <div class="gallery-item"         style="background-image:url('https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&auto=format&fit=crop')"></div>
+        <div class="gallery-item g-wide"  style="background-image:url('https://images.unsplash.com/photo-1424847651672-bf20a4b0982b?w=1200&auto=format&fit=crop')"></div>
+        <div class="gallery-item"         style="background-image:url('https://images.unsplash.com/photo-1550966871-3ed3cbe818b5?w=800&auto=format&fit=crop')"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       TESTIMONIALS
+  ========================================================= -->
+  <section class="testimonials" id="testimonials">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow" data-i18n="testEyebrow">Пікірлер</p>
+        <h2 class="section-title" data-i18n="testTitle">Қонақтарымыздың пікірі</h2>
+      </div>
+      <div class="testimonials-grid" id="testimonialsGrid">
+        <!-- JS will populate reviews -->
+      </div>
+      <form class="review-form" id="reviewForm" novalidate>
+        <div>
+          <p class="section-eyebrow" data-i18n="reviewFormEyebrow">Сіздің пікіріңіз</p>
+          <h3 data-i18n="reviewFormTitle">Пікір қалдыру</h3>
+        </div>
+        <div class="review-form-grid">
+          <div class="form-group">
+            <label data-i18n="reviewRating">Баға</label>
+            <select id="reviewRating">
+              <option value="5">★★★★★</option>
+              <option value="4">★★★★☆</option>
+              <option value="3">★★★☆☆</option>
+              <option value="2">★★☆☆☆</option>
+              <option value="1">★☆☆☆☆</option>
+            </select>
+          </div>
+          <div class="form-group review-text-field">
+            <label data-i18n="reviewText">Пікір</label>
+            <textarea id="reviewText" rows="3" data-i18n-placeholder="reviewTextPh" placeholder="Тағам мен қызмет туралы жазыңыз..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-gold" data-i18n="reviewSubmit">Жіберу</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       ABOUT SECTION
+  ========================================================= -->
+  <section class="about-section" id="about">
+    <div class="container">
+      <div class="about-inner">
+        <div class="about-images">
+          <div class="about-img about-img--main" style="background-image:url('https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=800&auto=format&fit=crop')"></div>
+          <div class="about-img about-img--accent" style="background-image:url('https://images.unsplash.com/photo-1482049016688-2d3e1b311543?w=600&auto=format&fit=crop')"></div>
+        </div>
+        <div class="about-content">
+          <p class="section-eyebrow" data-i18n="aboutEyebrow">Біз туралы</p>
+          <h2 class="section-title" data-i18n="aboutTitle">Біздің тарихымыз</h2>
+          <p data-i18n="aboutText1">2010 жылы ашылған DASTARKHAN мейрамханасы Алматы қаласының жүрегінде орналасқан. Біздің мақсатымыз — қазақтың бай асхана мәдениетін заманауи кулинария өнерімен үйлестіру.</p>
+          <p data-i18n="aboutText2">Әрбір тағам жергілікті фермерлерден алынған таза өнімдерден дайындалады. Біздің аспаздар командасы 15 жылдан астам тәжірибеге ие.</p>
+          <div class="about-stats">
+            <div class="stat"><span class="stat-num">15+</span><span data-i18n="stat1">Жыл тәжірибе</span></div>
+            <div class="stat"><span class="stat-num">80+</span><span data-i18n="stat2">Тағам түрі</span></div>
+            <div class="stat"><span class="stat-num">50K+</span><span data-i18n="stat3">Қанағатты қонақ</span></div>
+          </div>
+          <div class="about-contact">
+            <p><i class="fa-solid fa-location-dot"></i> <span data-i18n="aboutAddr">Алматы қ., Абай даңғылы, 150</span></p>
+            <p><i class="fa-solid fa-phone"></i> +7 (727) 123-45-67</p>
+            <p><i class="fa-regular fa-envelope"></i> info@dastarkhan.kz</p>
+            <p><i class="fa-regular fa-clock"></i> <span data-i18n="aboutHours">Дүйсенбі–Жексенбі: 10:00–23:00</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       AUTH MODALS (register / login)
+  ========================================================= -->
+  <div class="modal" id="modalRegister" role="dialog" aria-modal="true" aria-labelledby="registerModalTitle" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal tabindex="-1"></div>
+    <div class="modal-dialog">
+      <button type="button" class="modal-close" data-close-modal data-i18n-aria="modalClose" aria-label="Жабу">
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+      </button>
+      <div class="auth-inner">
+        <div class="auth-card">
+          <p class="section-eyebrow" data-i18n="registerEyebrow">Аккаунт</p>
+          <h2 class="section-title" id="registerModalTitle" data-i18n="registerTitle">Тіркелу</h2>
+          <form id="registerForm" novalidate>
+            <div class="form-group">
+              <label data-i18n="regName">Аты-жөні</label>
+              <input type="text" id="regName" data-i18n-placeholder="regNamePh" placeholder="Толық атыңыз" />
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" id="regEmail" placeholder="email@example.com" />
+            </div>
+            <div class="form-group">
+              <label data-i18n="regPassword">Құпия сөз</label>
+              <div class="password-wrap">
+                <input type="password" id="regPassword" data-i18n-placeholder="regPasswordPh" placeholder="Құпия сөз" />
+                <button type="button" class="eye-btn" id="toggleRegPass"><i class="fa-regular fa-eye"></i></button>
+              </div>
+              <div class="strength-bar-wrap">
+                <div class="strength-bar" id="strengthBar"></div>
+              </div>
+              <p class="strength-label" id="strengthLabel"></p>
+              <ul class="pw-rules" id="pwRules">
+                <li id="rule-len"  ><i class="fa-solid fa-circle-xmark"></i> <span data-i18n="ruleLen">Кемінде 8 таңба</span></li>
+                <li id="rule-upper"><i class="fa-solid fa-circle-xmark"></i> <span data-i18n="ruleUpper">Бір бас әріп (A-Z)</span></li>
+                <li id="rule-lower"><i class="fa-solid fa-circle-xmark"></i> <span data-i18n="ruleLower">Бір кіші әріп (a-z)</span></li>
+                <li id="rule-num"  ><i class="fa-solid fa-circle-xmark"></i> <span data-i18n="ruleNum">Бір сан (0-9)</span></li>
+                <li id="rule-spec" ><i class="fa-solid fa-circle-xmark"></i> <span data-i18n="ruleSpec">Бір арнайы таңба (!@#$%^&*)</span></li>
+              </ul>
+              <button type="button" class="btn btn-outline btn-sm" id="generatePassBtn" data-i18n="generatePass">Кездейсоқ пароль жасау</button>
+            </div>
+            <div class="form-group">
+              <label data-i18n="regConfirm">Құпия сөзді растау</label>
+              <div class="password-wrap">
+                <input type="password" id="regConfirm" data-i18n-placeholder="regConfirmPh" placeholder="Қайталаңыз" />
+                <button type="button" class="eye-btn" id="toggleConfirmPass"><i class="fa-regular fa-eye"></i></button>
+              </div>
+              <p class="confirm-msg hidden" id="confirmMsg"></p>
+            </div>
+            <button type="submit" class="btn btn-gold btn-full" data-i18n="registerBtn">Тіркелу</button>
+            <p class="auth-switch">
+              <span data-i18n="haveAccount">Аккаунт бар ма?</span>
+              <button type="button" class="auth-switch-btn" data-switch-modal="login" data-i18n="loginLink">Кіру</button>
+            </p>
+          </form>
+        </div>
+        <div class="auth-visual">
+          <div class="auth-visual-img" style="background-image:url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&auto=format&fit=crop')"></div>
+          <div class="auth-visual-overlay">
+            <blockquote data-i18n="authQuote">"Жақсы тағам — жан үшін бальзам"</blockquote>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="modalLogin" role="dialog" aria-modal="true" aria-labelledby="loginModalTitle" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal tabindex="-1"></div>
+    <div class="modal-dialog">
+      <button type="button" class="modal-close" data-close-modal data-i18n-aria="modalClose" aria-label="Жабу">
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+      </button>
+      <div class="auth-inner auth-inner--reverse">
+        <div class="auth-visual">
+          <div class="auth-visual-img" style="background-image:url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&auto=format&fit=crop')"></div>
+          <div class="auth-visual-overlay">
+            <blockquote data-i18n="loginQuote">"Қош келдіңіз, мейрамханаға!"</blockquote>
+          </div>
+        </div>
+        <div class="auth-card">
+          <p class="section-eyebrow" data-i18n="loginEyebrow">Аккаунт</p>
+          <h2 class="section-title" id="loginModalTitle" data-i18n="loginTitle">Кіру</h2>
+          <form id="loginForm" novalidate>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" id="loginEmail" placeholder="email@example.com" />
+            </div>
+            <div class="form-group">
+              <label data-i18n="regPassword">Құпия сөз</label>
+              <div class="password-wrap">
+                <input type="password" id="loginPassword" data-i18n-placeholder="regPasswordPh" placeholder="Құпия сөз" />
+                <button type="button" class="eye-btn" id="toggleLoginPass"><i class="fa-regular fa-eye"></i></button>
+              </div>
+            </div>
+            <div class="form-row form-row--between">
+              <label class="checkbox-label">
+                <input type="checkbox" /> <span data-i18n="remember">Мені есте сақта</span>
+              </label>
+              <a href="#" class="forgot-link" data-i18n="forgotPass">Парольді ұмыттыңыз ба?</a>
+            </div>
+            <button type="submit" class="btn btn-gold btn-full" data-i18n="loginBtn">Кіру</button>
+            <p class="auth-switch">
+              <span data-i18n="noAccount">Аккаунт жоқ па?</span>
+              <button type="button" class="auth-switch-btn" data-switch-modal="register" data-i18n="registerLink">Тіркелу</button>
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       DISCOUNT QUIZ GAME
+  ========================================================= -->
+  <div class="modal" id="modalQuiz" role="dialog" aria-modal="true" aria-labelledby="quizModalTitle" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal tabindex="-1"></div>
+    <div class="modal-dialog modal-dialog--quiz">
+      <button type="button" class="modal-close" data-close-modal data-i18n-aria="modalClose" aria-label="Жабу">
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+      </button>
+      <div class="quiz-panel">
+        <div class="quiz-head">
+          <p class="section-eyebrow" data-i18n="quizEyebrow">Ойын</p>
+          <h2 id="quizModalTitle" data-i18n="quizTitle">Кубик және викторина</h2>
+          <p data-i18n="quizDesc">Кубикті лақтырыңыз, сұраққа жауап беріңіз және тапсырысқа жеңілдік алыңыз.</p>
+        </div>
+        <div class="quiz-dice-stage">
+          <button type="button" class="quiz-dice" id="quizRollBtn" data-i18n-aria="quizRoll" aria-label="Кубикті лақтыру">
+            <span id="quizDiceFace">?</span>
+          </button>
+          <button type="button" class="btn btn-gold" id="quizRollAction" data-i18n="quizRoll">Кубикті лақтыру</button>
+        </div>
+        <div class="quiz-question-card hidden" id="quizQuestionCard">
+          <div class="quiz-prize" id="quizPrizeText">-10%</div>
+          <p class="quiz-progress" id="quizProgress">1 / 3</p>
+          <p class="quiz-question" id="quizQuestionText"></p>
+          <div class="quiz-options" id="quizOptions"></div>
+          <button type="button" class="btn btn-outline btn-full quiz-next-btn hidden" id="quizNextBtn" data-i18n="quizNext">Келесі сұрақ</button>
+        </div>
+        <p class="quiz-result" id="quizResult" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       CART MODAL
+  ========================================================= -->
+  <div class="modal" id="modalCart" role="dialog" aria-modal="true" aria-labelledby="cartModalTitle" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal tabindex="-1"></div>
+    <div class="modal-dialog modal-dialog--panel modal-dialog--cart">
+      <button type="button" class="modal-close" data-close-modal data-i18n-aria="modalClose" aria-label="Жабу">
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+      </button>
+      <div class="panel-modal-inner cart-panel-inner">
+        <div class="cart-modal-head">
+          <p class="section-eyebrow" data-i18n="cartEyebrow">Тапсырыс</p>
+          <h2 class="section-title" id="cartModalTitle" data-i18n="cartTitle">Себет</h2>
+        </div>
+        <div class="cart-items-panel">
+          <div id="cartLines" class="cart-lines"></div>
+          <p class="cart-empty-msg hidden" id="cartEmptyMsg" data-i18n="cartEmpty">Себет бос</p>
+        </div>
+        <div class="form-group cart-notes-wrap">
+          <label data-i18n="cartNotes">Ескертпе (міндетті емес)</label>
+          <textarea id="cartNotes" rows="2" data-i18n-placeholder="cartNotesPh" placeholder="Мысалы: қақпақсыз"></textarea>
+        </div>
+        <div class="cart-payment-wrap">
+          <label data-i18n="paymentTitle">Төлем тәсілі</label>
+          <div class="payment-options" id="paymentOptions">
+            <label class="payment-option">
+              <input type="radio" name="paymentMethod" value="cash" checked />
+              <span><i class="fa-solid fa-money-bill-wave" aria-hidden="true"></i><b data-i18n="paymentCash">Қолма-қол</b></span>
+            </label>
+            <label class="payment-option">
+              <input type="radio" name="paymentMethod" value="card" />
+              <span><i class="fa-solid fa-credit-card" aria-hidden="true"></i><b data-i18n="paymentCard">Карта</b></span>
+            </label>
+            <label class="payment-option">
+              <input type="radio" name="paymentMethod" value="kaspi" />
+              <span><i class="fa-solid fa-mobile-screen-button" aria-hidden="true"></i><b data-i18n="paymentKaspi">Kaspi</b></span>
+            </label>
+          </div>
+        </div>
+        <div class="cart-footer">
+          <span class="cart-total-label" data-i18n="cartTotal">Барлығы:</span>
+          <span class="cart-total-value" id="cartTotalVal">0 ₸</span>
+        </div>
+        <div class="cart-discount-row hidden" id="cartDiscountRow">
+          <span data-i18n="cartDiscount">Викторина жеңілдігі</span>
+          <strong id="cartDiscountVal">-0 ₸</strong>
+        </div>
+        <button type="button" class="btn btn-gold btn-full" id="cartCheckoutBtn" data-i18n="cartCheckout">Тапсырыс рәсімдеу</button>
+        <button type="button" class="btn btn-outline btn-full cart-clear-btn" id="cartClearBtn" data-i18n="cartClear">Себетті тазалау</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       PROFILE + ORDERS
+  ========================================================= -->
+  <div class="modal" id="modalProfile" role="dialog" aria-modal="true" aria-labelledby="profileModalTitle" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal tabindex="-1"></div>
+    <div class="modal-dialog modal-dialog--profile">
+      <button type="button" class="modal-close" data-close-modal data-i18n-aria="modalClose" aria-label="Жабу">
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+      </button>
+      <div class="panel-modal-inner profile-shell">
+        <div class="profile-hero-card">
+          <div class="profile-avatar" id="profileAvatar">D</div>
+          <div>
+            <p class="section-eyebrow" data-i18n="profileEyebrow">Аккаунт</p>
+            <h2 class="section-title" id="profileModalTitle" data-i18n="profileTitle">Профиль</h2>
+            <p class="profile-email muted" id="profileEmailDisplay"></p>
+          </div>
+        </div>
+        <div class="profile-content-grid">
+          <form id="profileForm" class="profile-card profile-form-card" novalidate>
+            <h3 class="profile-card-title" data-i18n="profilePersonal">Жеке деректер</h3>
+            <div class="form-group">
+              <label data-i18n="regName">Аты-жөні</label>
+              <input type="text" id="profileName" data-i18n-placeholder="regNamePh" placeholder="" />
+            </div>
+            <div class="form-group">
+              <label data-i18n="profilePhoneLabel">Телефон</label>
+              <input type="tel" id="profilePhone" placeholder="+7" />
+            </div>
+            <button type="submit" class="btn btn-gold btn-full" data-i18n="profileSave">Сақтау</button>
+            <button type="button" class="btn btn-outline btn-full profile-logout-btn" id="profileLogoutBtn">
+              <i class="fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i>
+              <span data-i18n="profileLogout">Шығу</span>
+            </button>
+          </form>
+          <div class="profile-card profile-favorites-col">
+            <h3 class="profile-card-title" data-i18n="profileFavorites">Таңдаулы тағамдар</h3>
+            <div id="profileFavorites" class="profile-favorites-list"></div>
+            <p class="muted hidden" id="profileFavoritesEmpty" data-i18n="profileFavoritesEmpty">Таңдаулы тағамдар әлі жоқ</p>
+          </div>
+          <div class="profile-card profile-orders-col">
+            <h3 class="profile-card-title" data-i18n="profileOrders">Тапсырыс тарихы</h3>
+            <div id="profileOrders" class="orders-list"></div>
+            <p class="muted hidden" id="profileOrdersEmpty" data-i18n="orderNoOrders">Тапсырыс жоқ</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       CHAT (Gemini)
+  ========================================================= -->
+  <div class="modal" id="modalChat" role="dialog" aria-modal="true" aria-labelledby="chatModalTitle" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal tabindex="-1"></div>
+    <div class="modal-dialog modal-dialog--chat">
+      <button type="button" class="modal-close" data-close-modal data-i18n-aria="modalClose" aria-label="Жабу">
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+      </button>
+      <div class="chat-panel">
+        <div class="chat-head">
+          <div class="chat-avatar" aria-hidden="true">
+            <i class="fa-solid fa-comments"></i>
+          </div>
+          <div>
+            <p class="section-eyebrow" data-i18n="chatEyebrow">Көмекші</p>
+            <h2 id="chatModalTitle" data-i18n="chatTitle">Сұрақ қойыңыз</h2>
+          </div>
+        </div>
+        <div class="chat-messages" id="chatMessages" aria-live="polite">
+          <div class="chat-bubble chat-bubble--bot" data-i18n="chatWelcome">Сәлем! Мәзір, брондау немесе тапсырыс туралы сұраңыз.</div>
+        </div>
+        <div class="chat-input-row">
+          <input type="text" id="chatInput" autocomplete="off" data-i18n-placeholder="chatPlaceholder" placeholder="" />
+          <button type="button" class="chat-send-btn" id="chatSendBtn" data-i18n-title="chatSend" title="Жіберу">
+            <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button type="button" class="chat-fab" id="chatFab" data-open-modal="chat" data-i18n-title="chatFabTitle" title="Чат">
+    <i class="fa-solid fa-comments" aria-hidden="true"></i>
+  </button>
+
+  <!-- =========================================================
+       RESERVATION MODAL
+  ========================================================= -->
+  <div class="modal" id="modalReservation" role="dialog" aria-modal="true" aria-labelledby="reserveModalTitle" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal tabindex="-1"></div>
+    <div class="modal-dialog modal-dialog--reservation">
+      <button type="button" class="modal-close" data-close-modal data-i18n-aria="modalClose" aria-label="Жабу">
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+      </button>
+      <div class="reservation-inner reservation-inner--modal">
+        <div class="reservation-text">
+          <p class="section-eyebrow" data-i18n="reserveEyebrow">Брондау</p>
+          <h2 class="section-title" id="reserveModalTitle" data-i18n="reserveTitle">Үстел брондаңыз</h2>
+          <p data-i18n="reserveDesc">Алдын ала брондау арқылы сіздің орын кепілдендіріледі. Бізге хабарлаңыз!</p>
+          <ul class="reserve-info">
+            <li><i class="fa-regular fa-clock"></i> <span data-i18n="workHours">Дүйсенбі–Жексенбі: 10:00–23:00</span></li>
+            <li><i class="fa-solid fa-phone"></i> +7 (727) 123-45-67</li>
+            <li><i class="fa-solid fa-location-dot"></i> <span data-i18n="address">Алматы қ., Абай даңғ., 150</span></li>
+          </ul>
+        </div>
+        <form class="reservation-form" id="reservationForm" novalidate>
+          <div class="form-group">
+            <label data-i18n="reserveName">Аты-жөні</label>
+            <input type="text" id="resName" data-i18n-placeholder="reserveNamePh" placeholder="Сіздің атыңыз" />
+          </div>
+          <div class="form-group">
+            <label data-i18n="reservePhone">Телефон</label>
+            <input type="tel" id="resPhone" placeholder="+7 (___) ___-__-__" />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label data-i18n="reserveDate">Күн</label>
+              <input type="date" id="resDate" />
+            </div>
+            <div class="form-group">
+              <label data-i18n="reserveTime">Уақыт</label>
+              <input type="time" id="resTime" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label data-i18n="reserveGuests">Қонақтар саны</label>
+            <select id="resGuests">
+              <option value="1">1</option>
+              <option value="2" selected>2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6+</option>
+            </select>
+          </div>
+          <div class="reservation-preorder">
+            <div class="reservation-preorder-head">
+              <div>
+                <h3 data-i18n="reservePreorderTitle">Алдын ала тағам таңдау</h3>
+                <p data-i18n="reservePreorderDesc">Келгеніңізде дайын болуы үшін тағамдарды қосыңыз.</p>
+              </div>
+              <span class="reservation-preorder-total" id="reservationFoodTotal">0 ₸</span>
+            </div>
+            <div class="reservation-add-row">
+              <select id="reservationDishSelect" data-i18n-aria="reserveDishSelect" aria-label="Тағам таңдау"></select>
+              <input type="number" id="reservationDishQty" min="1" max="20" value="1" aria-label="Саны" />
+              <button type="button" class="btn btn-outline btn-sm" id="reservationDishAdd" data-i18n="reserveDishAdd">Қосу</button>
+            </div>
+            <div class="reservation-food-list" id="reservationFoodList"></div>
+            <p class="muted reservation-food-empty" id="reservationFoodEmpty" data-i18n="reserveFoodEmpty">Әзірге тағам таңдалмады</p>
+          </div>
+          <div class="form-group">
+            <label data-i18n="reserveNotes">Комментарий</label>
+            <textarea id="resNotes" rows="3" data-i18n-placeholder="reserveNotesPh" placeholder="Мысалы: терезе жанындағы үстел"></textarea>
+          </div>
+          <button type="submit" class="btn btn-gold btn-full" data-i18n="reserveBtn">Үстел брондау</button>
+          <p class="form-success hidden" id="reserveSuccess" data-i18n="reserveSuccess">✓ Брондауыңыз қабылданды!</p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       FOOTER
+  ========================================================= -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="footer-logo">DASTARKHAN</span>
+          <p data-i18n="footerDesc">Дәстүр мен заманауи дәмнің бірлігі</p>
+          <div class="social-links">
+            <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+            <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="#" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footerNav">Навигация</h4>
+          <ul>
+            <li><a href="#home"        data-scroll="home"        data-i18n="navHome">Басты бет</a></li>
+            <li><a href="#menu"        data-scroll="menu"        data-i18n="navMenu">Мәзір</a></li>
+            <li><a href="#" data-open-modal="reservation" data-i18n="navReserve">Үстел брондау</a></li>
+            <li><a href="#about"       data-scroll="about"       data-i18n="navAbout">Біз туралы</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footerContact">Байланыс</h4>
+          <ul class="footer-contact">
+            <li><i class="fa-solid fa-location-dot"></i> <span data-i18n="address">Алматы қ., Абай даңғ., 150</span></li>
+            <li><i class="fa-solid fa-phone"></i> +7 (727) 123-45-67</li>
+            <li><i class="fa-regular fa-envelope"></i> info@dastarkhan.kz</li>
+            <li><i class="fa-regular fa-clock"></i> <span data-i18n="workHours">Дүйсенбі–Жексенбі: 10:00–23:00</span></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footerHours">Жұмыс уақыты</h4>
+          <ul class="footer-hours">
+            <li><span data-i18n="hoursWeekday">Дүйсенбі – Жұма</span> <span>10:00–23:00</span></li>
+            <li><span data-i18n="hoursSat">Сенбі</span> <span>11:00–00:00</span></li>
+            <li><span data-i18n="hoursSun">Жексенбі</span> <span>11:00–22:00</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 DASTARKHAN. <span data-i18n="footerRights">Барлық құқықтар қорғалған.</span></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast notification -->
+  <div class="toast" id="toast"></div>
+
+  <script src="js/i18n.js?v=20260505-16"></script>
+  <script src="js/data.js?v=20260505-6"></script>
+  <script src="js/api.js?v=20260505-12"></script>
+  <script src="js/main.js?v=20260505-19"></script>
+</body>
+</html>
