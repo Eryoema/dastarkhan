@@ -24,17 +24,22 @@ CSRF_TRUSTED_ORIGINS=https://<your-service-name>.onrender.com
 DATABASE_URL=<Render PostgreSQL internal connection string>
 GEMINI_API_KEY=<your Google AI Studio key>
 GEMINI_MODEL=gemini-2.5-flash
+ADMIN_USERNAME=admin
+ADMIN_EMAIL=<your email>
+ADMIN_PASSWORD=<strong admin password>
 ```
 
-## After deploy
+## Admin
 
-Open Render Shell and create the admin user:
+On free Render instances, Shell access can be unavailable. This project creates or updates the admin account automatically during deploy when these environment variables are set:
 
-```bash
-python manage.py createsuperuser
+```text
+ADMIN_USERNAME=admin
+ADMIN_EMAIL=<your email>
+ADMIN_PASSWORD=<strong admin password>
 ```
 
-Then open:
+After deploy, open:
 
 ```text
 https://<your-service-name>.onrender.com/admin/
